@@ -11,11 +11,16 @@ const CROSSHAIR_SCENE := preload("res://client/crosshair.tscn")
 var peer_id := 0
 var mode: MatchModeData
 var avatars: Dictionary[int, Avatar] = {}
+var confirmed_position := Vector3.INF
+var max_correction := 0.0
 
 var _map: Node3D
 var _camera: ThirdPersonCamera
 var _seq := 0
-var _latest_states: Array = []
+var _clock := 0.0
+var _own_state: Array = []
+var _prediction := Prediction.new()
+var _remote_buffers: Dictionary[int, Interpolation] = {}
 
 
 func join(host: String, port: int) -> Error:
@@ -47,34 +52,70 @@ func _on_welcomed(mode_id: String, my_peer_id: int) -> void:
 	add_child(CROSSHAIR_SCENE.instantiate())
 
 
-func _on_snapshot(_tick: int, states: Array) -> void:
-	_latest_states = states
-
-
-func _physics_process(_delta: float) -> void:
-	if _map == null:
-		return
-	_seq += 1
-	var move := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	Net.submit_input.rpc_id(1, _seq, move, _camera.yaw)
-	_apply_states()
-
-
-func _apply_states() -> void:
+func _on_snapshot(tick: int, states: Array) -> void:
+	_clock = Interpolation.sync_clock(_clock, float(tick) / Engine.physics_ticks_per_second)
 	var seen: Dictionary[int, bool] = {}
-	for state: Array in _latest_states:
+	for state: Array in states:
 		var id: int = state[0]
 		seen[id] = true
 		if not avatars.has(id):
-			avatars[id] = _spawn_avatar()
-			if id == peer_id:
-				_camera.target = avatars[id]
-		avatars[id].global_position = state[1]
-		avatars[id].rotation.y = state[2]
+			_add_avatar(id, state[1])
+		if id == peer_id:
+			_own_state = state
+		else:
+			_remote_buffers[id].push(float(tick) / Engine.physics_ticks_per_second, state[1], state[2])
 	for id: int in avatars.keys():
 		if not seen.has(id):
 			avatars[id].queue_free()
 			avatars.erase(id)
+			_remote_buffers.erase(id)
+
+
+func _add_avatar(id: int, position: Vector3) -> void:
+	var avatar := _spawn_avatar()
+	avatar.global_position = position
+	avatar.reset_physics_interpolation()
+	avatars[id] = avatar
+	if id == peer_id:
+		_camera.target = avatar
+	else:
+		# Se interpola a mano en `_process`.
+		avatar.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
+		_remote_buffers[id] = Interpolation.new()
+
+
+func _process(delta: float) -> void:
+	_clock += delta
+	for id: int in _remote_buffers:
+		var sampled := _remote_buffers[id].sample(_clock - Interpolation.DELAY)
+		if not sampled.is_empty():
+			avatars[id].global_position = sampled.position
+			avatars[id].rotation.y = sampled.yaw
+
+
+func _physics_process(_delta: float) -> void:
+	if not avatars.has(peer_id):
+		return
+	var avatar := avatars[peer_id]
+	# Se reconcilia aquí y no en el RPC: `move_and_slide()` necesita el tick de física.
+	if not _own_state.is_empty():
+		_reconcile(avatar)
+	_seq += 1
+	var move := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	avatar.apply_input(move, _camera.yaw)
+	_prediction.record(_seq, move, _camera.yaw)
+	Net.submit_input.rpc_id(1, _seq, move, _camera.yaw)
+
+
+func _reconcile(avatar: Avatar) -> void:
+	var predicted := avatar.global_position
+	confirmed_position = _own_state[1]
+	_prediction.acknowledge(_own_state[3])
+	avatar.global_position = confirmed_position
+	for input: Dictionary in _prediction.pending:
+		avatar.apply_input(input.move, input.yaw)
+	max_correction = maxf(max_correction, predicted.distance_to(avatar.global_position))
+	_own_state = []
 
 
 func _spawn_avatar() -> Avatar:

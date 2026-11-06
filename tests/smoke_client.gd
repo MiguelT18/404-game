@@ -28,8 +28,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_elapsed += delta
-	if _start == Vector3.INF and _client.avatars.has(_client.peer_id):
-		_start = _client.avatars[_client.peer_id].global_position
+	if _start == Vector3.INF:
+		_start = _client.confirmed_position
 	if _expect == "reject" and _left_reason != "":
 		_finish(_left_reason != "Conexión perdida", "rechazado: %s" % _left_reason)
 	elif _expect == "accept" and _left_reason != "":
@@ -39,12 +39,13 @@ func _process(delta: float) -> void:
 
 
 func _finish_timeout() -> void:
-	if _expect == "reject" or not _client.avatars.has(_client.peer_id):
+	if _expect == "reject" or _start == Vector3.INF:
 		_finish(false, "sin resultado esperado")
 		return
-	var travel := _start.distance_to(_client.avatars[_client.peer_id].global_position)
+	var travel := _start.distance_to(_client.confirmed_position)
 	var others := _client.avatars.size() - 1
-	_finish(travel >= MIN_TRAVEL and others == 1, "recorrió %.1f m, ve a %d más" % [travel, others])
+	var detail := "recorrió %.1f m, ve a %d más, corrección máxima %.3f m" % [travel, others, _client.max_correction]
+	_finish(travel >= MIN_TRAVEL and others == 1, detail)
 
 
 func _finish(passed: bool, detail: String) -> void:
