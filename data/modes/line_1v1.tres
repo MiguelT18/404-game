@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="MatchModeData" format=3]
 
 [ext_resource type="Script" path="res://shared/match_mode_data.gd" id="1"]
+[ext_resource type="PackedScene" path="res://maps/test_map.tscn" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = &"line_1v1"
 players_per_team = 1
+map = ExtResource("2")

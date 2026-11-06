@@ -4,8 +4,16 @@ extends Node
 
 signal left(reason: String)
 
+const AVATAR_SCENE := preload("res://shared/avatar.tscn")
+const VISUAL_SCENE := preload("res://client/avatar_visual.tscn")
+
 var peer_id := 0
 var mode: MatchModeData
+var avatars: Dictionary[int, Avatar] = {}
+
+var _map: Node3D
+var _seq := 0
+var _latest_states: Array = []
 
 
 func join(host: String, port: int) -> Error:
@@ -19,6 +27,7 @@ func join(host: String, port: int) -> Error:
 	multiplayer.server_disconnected.connect(_leave.bind("Conexión perdida"))
 	Net.welcomed.connect(_on_welcomed)
 	Net.rejected.connect(_leave)
+	Net.snapshot_received.connect(_on_snapshot)
 	return OK
 
 
@@ -29,6 +38,43 @@ func _on_connected() -> void:
 func _on_welcomed(mode_id: String, my_peer_id: int) -> void:
 	peer_id = my_peer_id
 	mode = load("res://data/modes/%s.tres" % mode_id)
+	_map = mode.map.instantiate()
+	add_child(_map)
+
+
+func _on_snapshot(_tick: int, states: Array) -> void:
+	_latest_states = states
+
+
+func _physics_process(_delta: float) -> void:
+	if _map == null:
+		return
+	_seq += 1
+	var move := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	Net.submit_input.rpc_id(1, _seq, move, 0.0)
+	_apply_states()
+
+
+func _apply_states() -> void:
+	var seen: Dictionary[int, bool] = {}
+	for state: Array in _latest_states:
+		var id: int = state[0]
+		seen[id] = true
+		if not avatars.has(id):
+			avatars[id] = _spawn_avatar()
+		avatars[id].global_position = state[1]
+		avatars[id].rotation.y = state[2]
+	for id: int in avatars.keys():
+		if not seen.has(id):
+			avatars[id].queue_free()
+			avatars.erase(id)
+
+
+func _spawn_avatar() -> Avatar:
+	var avatar: Avatar = AVATAR_SCENE.instantiate()
+	avatar.add_child(VISUAL_SCENE.instantiate())
+	_map.add_child(avatar)
+	return avatar
 
 
 func _leave(reason: String) -> void:
