@@ -11,3 +11,10 @@ Juego multijugador en línea hecho con Godot 4.7 y GDScript.
 4. Pulsa **F5** para ejecutar el juego.
 
 Haz commit de los archivos `.uid` que genera Godot: guardan las referencias entre recursos.
+
+## Documentación
+
+- [Guía para agentes de IA](AGENTS.md)
+- [Diseño del juego](docs/game-design.md)
+- [Arquitectura técnica](docs/architecture.md)
+- [Hoja de ruta del MVP](docs/mvp-roadmap.md)
