@@ -21,11 +21,11 @@ El **MVP jugable es M3**: una partida 1v1 completa en línea única. Ese modo de
 
 ### M1: movimiento en red
 
-- [ ] Existe un servidor headless y un cliente que se conecta por IP y puerto.
-- [ ] Dos clientes se mueven y se ven en un mapa de prueba.
+- [x] Existe un servidor headless y un cliente que se conecta por IP y puerto.
+- [x] Dos clientes se mueven y se ven en un mapa de prueba.
 - [ ] La cámara en tercera persona funciona con mira central.
 - [ ] El movimiento propio usa predicción y el de los demás se ve suave.
-- [ ] Se probó entre dos redes distintas, o con latencia y pérdida de paquetes simuladas.
+- [x] Se probó entre dos redes distintas, o con latencia y pérdida de paquetes simuladas.
 
 ### M2: combate
 

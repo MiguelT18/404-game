@@ -49,14 +49,17 @@ godot --path .
 godot --headless --path . --import
 ```
 
-Estos comandos estarán disponibles cuando exista el código de M1. Si cambian, actualízalos aquí.
+Si estos comandos cambian, actualízalos aquí.
 
 ```sh
 # Ejecutar el servidor de partida
 godot --headless --path . -- --server --port 7777 --mode line_1v1
 
-# Ejecutar las pruebas
+# Ejecutar las pruebas de reglas
 godot --headless --path . --script res://tests/run_tests.gd
+
+# Ejecutar la prueba de red: un servidor y varios clientes headless
+tests/net_smoke.sh
 ```
 
 ## Git
