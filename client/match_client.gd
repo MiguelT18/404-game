@@ -6,12 +6,14 @@ signal left(reason: String)
 
 const AVATAR_SCENE := preload("res://shared/avatar.tscn")
 const VISUAL_SCENE := preload("res://client/avatar_visual.tscn")
+const CROSSHAIR_SCENE := preload("res://client/crosshair.tscn")
 
 var peer_id := 0
 var mode: MatchModeData
 var avatars: Dictionary[int, Avatar] = {}
 
 var _map: Node3D
+var _camera: ThirdPersonCamera
 var _seq := 0
 var _latest_states: Array = []
 
@@ -40,6 +42,9 @@ func _on_welcomed(mode_id: String, my_peer_id: int) -> void:
 	mode = load("res://data/modes/%s.tres" % mode_id)
 	_map = mode.map.instantiate()
 	add_child(_map)
+	_camera = ThirdPersonCamera.new()
+	add_child(_camera)
+	add_child(CROSSHAIR_SCENE.instantiate())
 
 
 func _on_snapshot(_tick: int, states: Array) -> void:
@@ -51,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 		return
 	_seq += 1
 	var move := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	Net.submit_input.rpc_id(1, _seq, move, 0.0)
+	Net.submit_input.rpc_id(1, _seq, move, _camera.yaw)
 	_apply_states()
 
 
@@ -62,6 +67,8 @@ func _apply_states() -> void:
 		seen[id] = true
 		if not avatars.has(id):
 			avatars[id] = _spawn_avatar()
+			if id == peer_id:
+				_camera.target = avatars[id]
 		avatars[id].global_position = state[1]
 		avatars[id].rotation.y = state[2]
 	for id: int in avatars.keys():
