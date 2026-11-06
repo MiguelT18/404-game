@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HeroData" format=3]
+
+[ext_resource type="Script" path="res://shared/hero_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"guardian"
+move_speed = 6.0
