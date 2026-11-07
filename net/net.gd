@@ -12,7 +12,7 @@ const INPUT_CHANNEL := 1
 const SNAPSHOT_CHANNEL := 2
 
 
-static func game_version() -> String:
+func game_version() -> String:
 	return ProjectSettings.get_setting("application/config/version")
 
 
