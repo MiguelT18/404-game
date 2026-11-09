@@ -72,4 +72,5 @@ tests/net_smoke.sh
 
 - Trabaja en una rama por tarea y une los cambios con un pull request.
 - Haz commits pequeños, con mensajes en español que digan qué cambia.
+- Los modelos `.blend` y `.glb` van en Git LFS. Ejecuta `git lfs install` una vez antes de clonar o de subir modelos.
 - No subas secretos, direcciones de servidores privados ni claves de Tailscale.
