@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cytq8n3uxw62s"
-path="res://.godot/imported/arcanist_arcanist_orm.png-254df3d526049766eeeb3c21f4fee09f.ctex"
+path.s3tc="res://.godot/imported/arcanist_arcanist_orm.png-254df3d526049766eeeb3c21f4fee09f.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "c01edfaeeadcc47c0bd5a7209475f155"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://models/heroes/arcanist_arcanist_orm.png"
-dest_files=["res://.godot/imported/arcanist_arcanist_orm.png-254df3d526049766eeeb3c21f4fee09f.ctex"]
+dest_files=["res://.godot/imported/arcanist_arcanist_orm.png-254df3d526049766eeeb3c21f4fee09f.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
