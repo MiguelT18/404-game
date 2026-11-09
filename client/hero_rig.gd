@@ -37,6 +37,8 @@ var _last_position := Vector3.INF
 var _velocity := Vector3.ZERO
 var _airtime := 0.7
 var _landing := 0.0
+## Modificadores del esqueleto que cambian mientras lanza, como el agarre del bastón.
+var _casting_aware: Array[Node] = []
 
 
 ## Prepara el árbol si `model` trae un `AnimationPlayer` con los clips de movimiento.
@@ -85,6 +87,10 @@ func _ready() -> void:
 		_airtime = 2.0 * avatar.hero.jump_speed / MoveRules.GRAVITY
 	for clip in LOOPS:
 		_player.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
+	var skeleton: Skeleton3D = _player.get_parent().find_child("Skeleton3D", true, false)
+	for child in skeleton.get_children():
+		if &"casting" in child:
+			_casting_aware.append(child)
 	root_node = get_path_to(_player.get_parent())
 	anim_player = get_path_to(_player)
 	tree_root = _build_tree()
@@ -166,9 +172,12 @@ func _process(delta: float) -> void:
 		set("parameters/move/transition_request", String(state))
 		_state = state
 	set("parameters/move_speed/scale", clampf(scale, 0.5, 2.0))
+	var casting: bool = get("parameters/cast/active")
+	for node in _casting_aware:
+		node.casting = casting
 	if _armature != null:
 		# Mientras lanza mira hacia donde apunta; si no, hacia donde corre.
-		if get("parameters/cast/active"):
+		if casting:
 			turn = 0.0
 		_armature.rotation.y = lerp_angle(_armature.rotation.y, turn, 1.0 - exp(-TURN_RATE * delta))
 

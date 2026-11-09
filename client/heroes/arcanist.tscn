@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://models/heroes/arcanist.glb" id="1"]
 [ext_resource type="Script" path="res://client/heroes/floating_orb.gd" id="2"]
+[ext_resource type="Script" path="res://client/heroes/staff_grip.gd" id="3"]
 
 [node name="Arcanist" instance=ExtResource("1")]
 
@@ -13,3 +14,6 @@ skeleton = NodePath("..")
 
 [node name="Tip" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="3"]
 bone_name = "Tip"
+
+[node name="StaffGrip" type="SkeletonModifier3D" parent="Armature/Skeleton3D" index="4"]
+script = ExtResource("3")
