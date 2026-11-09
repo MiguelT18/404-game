@@ -3,3 +3,7 @@
 
 # Exportaciones
 build/
+
+# Copias de seguridad de Blender
+*.blend1
+*.blend2

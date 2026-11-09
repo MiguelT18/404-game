@@ -77,3 +77,7 @@ ability_4={
 common/physics_ticks_per_second=30
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
+
+[filesystem]
+
+import/blender/enabled=false

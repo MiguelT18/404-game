@@ -58,8 +58,11 @@ server/   Arranque del servidor, sesiones, validación y bucle de partida
 net/      Protocolo: RPC, formato de entradas e instantáneas
 data/     Recursos .tres: heroes/, abilities/, dummies/, items/, modes/
 maps/     Escenas de mapas
+models/   Modelos de Blender: heroes/, maps/
 tests/    Pruebas automáticas
 ```
+
+**Modelos:** cada modelo guarda su fuente `<id>.blend` y, junto a ella, el `<id>.glb` exportado desde Blender. Godot solo importa el `.glb`: la importación directa de `.blend` está desactivada en `project.godot`, porque exigiría tener Blender instalado en cada equipo y en el servidor headless. Las copias `.blend1` no se suben. Los modelos de héroes son solo presentación: los usa `client/heroes/<id>.tscn`, nunca `shared/` ni `server/`.
 
 **Dependencias permitidas:** `client/` y `server/` pueden usar `shared/`, `net/` y `data/`. `shared/` no puede depender de `client/` ni de `server/`, ni usar nodos visuales, audio o interfaz. Por eso `shared/avatar.tscn` es solo el cuerpo, y el cliente le añade el modelo `client/heroes/<id>.tscn`, elegido por el id del héroe. Así el servidor no carga escenas visuales. Un héroe nuevo necesita su `.tres` y esa escena, con el frente hacia -Z y la base en Y = 0. La escena lleva un nodo `Weapon` con un `Tip` en la punta y, si tiene escudo, un `Shield`: `HeroAnimator` los mueve al lanzar cada pieza. Cada habilidad necesita un icono en `client/icons/<id>.svg`, elegido también por su id. Sus efectos los dibuja `CombatVisuals` según su pieza (`AbilityData.Kind`), con partículas, luces y shaders hechos en código en `client/fx/`, así que no necesitan arte propio; `fx_color` cambia su color. El retrato de la interfaz se renderiza una vez desde el modelo, y el minimapa se genera del nodo `Floor` y de los `StaticBody3D` del mapa, así que no necesitan imágenes propias.
 
