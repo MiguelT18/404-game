@@ -7,3 +7,7 @@ build/
 # Copias de seguridad de Blender
 *.blend1
 *.blend2
+
+# Restos de importar los .blend cuando Godot encuentra Blender instalado
+models/**/*.blend.import
+models/**/textures/

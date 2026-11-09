@@ -8,5 +8,8 @@
 [node name="Orb" parent="Armature/Skeleton3D/Orb" index="0"]
 script = ExtResource("2")
 
+[node name="Body" parent="Armature/Skeleton3D" index="2"]
+skeleton = NodePath("..")
+
 [node name="Tip" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="3"]
 bone_name = "Tip"

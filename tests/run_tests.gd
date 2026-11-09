@@ -224,6 +224,10 @@ func _test_hero_clips() -> void:
 		var hero: HeroData = load("res://data/heroes/%s.tres" % id)
 		var model: Node3D = load("res://client/heroes/%s.tscn" % id).instantiate()
 		_check(model.find_child("Tip", true, false) is Node3D, "%s tiene punta de disparo" % id)
+		# Godot 4.7 no enlaza la piel al esqueleto si hay piezas colgadas de los huesos.
+		for mesh: MeshInstance3D in model.find_children("*", "MeshInstance3D", true, false):
+			if mesh.skin != null:
+				_check(mesh.get_node_or_null(mesh.skeleton) is Skeleton3D, "%s: %s sigue al esqueleto" % [id, mesh.name])
 		var player: AnimationPlayer = model.find_child("AnimationPlayer", true, false)
 		if player != null:
 			for clip in HeroRig.MOVES:
