@@ -8,8 +8,8 @@ const MAX_PENDING := 90
 var pending: Array[Dictionary] = []
 
 
-func record(seq: int, move: Vector2, yaw: float) -> void:
-	pending.append({"seq": seq, "move": move, "yaw": yaw})
+func record(seq: int, move: Vector2, yaw: float, jump := false) -> void:
+	pending.append({"seq": seq, "move": move, "yaw": yaw, "jump": jump})
 	if pending.size() > MAX_PENDING:
 		pending.pop_front()
 

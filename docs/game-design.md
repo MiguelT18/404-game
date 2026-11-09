@@ -25,14 +25,24 @@ Un MOBA de acción: el jugador controla directamente a su personaje desde atrás
 | Acción | Tecla |
 |---|---|
 | Moverse | W, A, S, D |
+| Saltar | Espacio |
 | Mover la cámara y apuntar | Ratón |
 | Ataque básico | Clic izquierdo |
-| Habilidades 1, 2 y 3 | Q, E, R |
-| Habilidad definitiva | F |
+| Habilidades 1, 2 y 3 | 1, 2, 3 |
+| Habilidad definitiva | 4 |
 | Abrir tienda (en la base) | P |
 | Mejorar habilidad | Ctrl + tecla de la habilidad |
 
 La cámara va detrás y sobre el hombro. Una mira fija en el centro de la pantalla marca hacia dónde apunta el personaje.
+
+El salto solo se puede hacer desde el suelo, y no mientras el personaje está aturdido o cargando una habilidad. Por ahora es solo movimiento: saltar no esquiva ataques, porque los impactos ignoran la altura.
+
+## Interfaz
+
+- **Arriba a la izquierda:** retrato del héroe en un círculo grande, con las barras de vida y maná a su derecha. El escudo aparece como un tramo blanco en la barra de vida. Al morir, el retrato pasa a gris y muestra la cuenta atrás de reaparición.
+- **Arriba a la derecha:** minimapa con el norte arriba. Por ahora muestra a todos los jugadores.
+- **Abajo, en el centro:** ataque básico y 4 poderes como iconos. El cooldown se ve como un reloj con los segundos encima, y el icono se tiñe de azul si falta maná.
+- **Efectos:** cada poder muestra un gesto del héroe y un efecto propio. Los golpes muestran chispas, un destello y el daño. Impacto, Golpe circular, Descarga y recibir daño hacen temblar la cámara. El salto de Impacto es un arco visual: para las reglas, el héroe no deja el suelo.
 
 ## Modos
 
@@ -49,6 +59,8 @@ El matchmaking (M6) permite entrar a una cola por modo. Antes de M6, los jugador
 ## Mapas
 
 **Línea única:** un camino recto entre las dos bases, con 2 torres por equipo y un núcleo en cada base. Los jugadores solo compran al estar en la base, es decir, al empezar o tras reaparecer.
+
+**Arena de pruebas:** mapa pequeño del modo `hero_test` para probar héroes, sin torres ni minions. Tiene muñecos de práctica con distinta armadura y resistencia, y pilares para probar que los muros bloquean. Todos los jugadores son enemigos entre sí y la definitiva está disponible desde el inicio.
 
 **Tres líneas:** líneas superior, media e inferior, con 2 torres por línea y equipo, y un núcleo en cada base. La zona entre líneas es transitable y no tiene monstruos neutrales en el MVP. Aquí existe **Regresar**: canalizar durante 6 segundos para volver a la base, cancelable al recibir daño.
 
@@ -81,25 +93,37 @@ Gana el equipo que destruye el núcleo enemigo. Las torres se destruyen en orden
 
 Cada personaje tiene ataque básico, 3 habilidades y una definitiva. Un punto de habilidad se gana por nivel, y la definitiva se desbloquea en el nivel 5.
 
+Cada personaje es cuerpo a cuerpo o a distancia, y su daño es físico o mágico.
+
 Los nombres son provisionales. Estos dos personajes cubren los tipos de habilidad que el sistema debe soportar: proyectil, área, desplazamiento, mejora y zona persistente.
 
-### Guardián (cuerpo a cuerpo, resistente)
+### Daño
+
+La armadura reduce el daño físico y la resistencia mágica reduce el mágico:
+
+`daño recibido = daño × 100 / (100 + resistencia)`
+
+Con 100 de resistencia se recibe la mitad. El escudo absorbe el daño ya reducido antes de que llegue a la vida.
+
+### Guardián (cuerpo a cuerpo, daño físico, resistente)
 
 | Tecla | Habilidad | Efecto |
 |---|---|---|
-| Q | Embestida | Corre hacia delante y daña a quien golpea |
-| E | Golpe circular | Daña a los enemigos cercanos y los ralentiza |
-| R | Baluarte | Obtiene un escudo temporal |
-| F | Impacto | Salta a un punto y aturde al caer en un área |
+| Clic | Golpe | Golpea a los enemigos que tiene delante |
+| 1 | Embestida | Corre hacia delante y daña a quien golpea |
+| 2 | Golpe circular | Daña a los enemigos cercanos y los ralentiza |
+| 3 | Baluarte | Obtiene un escudo temporal |
+| 4 | Impacto | Salta a un punto y aturde al caer en un área |
 
-### Arcanista (a distancia, daño alto, frágil)
+### Arcanista (a distancia, daño mágico alto, frágil)
 
 | Tecla | Habilidad | Efecto |
 |---|---|---|
-| Q | Dardo | Proyectil recto de largo alcance |
-| E | Campo gélido | Crea una zona que ralentiza y daña |
-| R | Parpadeo | Se teletransporta una distancia corta |
-| F | Descarga | Tras una breve carga, dispara un rayo que atraviesa enemigos |
+| Clic | Orbe | Proyectil recto de alcance medio |
+| 1 | Dardo | Proyectil recto de largo alcance |
+| 2 | Campo gélido | Crea una zona que ralentiza y daña |
+| 3 | Parpadeo | Se teletransporta una distancia corta |
+| 4 | Descarga | Tras una breve carga, dispara un rayo que atraviesa enemigos |
 
 ## Ítems
 

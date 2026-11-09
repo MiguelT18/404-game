@@ -1,8 +1,24 @@
 [gd_resource type="Resource" script_class="HeroData" format=3]
 
 [ext_resource type="Script" path="res://shared/hero_data.gd" id="1"]
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="2"]
+[ext_resource type="Resource" path="res://data/abilities/guardian_strike.tres" id="3"]
+[ext_resource type="Resource" path="res://data/abilities/guardian_charge.tres" id="4"]
+[ext_resource type="Resource" path="res://data/abilities/guardian_sweep.tres" id="5"]
+[ext_resource type="Resource" path="res://data/abilities/guardian_bulwark.tres" id="6"]
+[ext_resource type="Resource" path="res://data/abilities/guardian_impact.tres" id="7"]
 
 [resource]
 script = ExtResource("1")
 id = &"guardian"
+display_name = "Guardián"
+attack_type = 0
+damage_type = 0
 move_speed = 6.0
+max_health = 650.0
+max_mana = 200.0
+mana_regen = 6.0
+armor = 40.0
+magic_resist = 20.0
+basic_attack = ExtResource("3")
+abilities = Array[ExtResource("2")]([ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7")])

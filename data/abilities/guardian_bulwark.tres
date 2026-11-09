@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"guardian_bulwark"
+display_name = "Baluarte"
+kind = 4
+mana_cost = 60.0
+cooldown = 14.0
+duration = 4.0
+shield = 150.0
+fx_color = Color(1, 0.85, 0.45, 1)

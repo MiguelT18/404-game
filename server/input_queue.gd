@@ -9,11 +9,11 @@ var last_seq := 0
 var _items: Array[Dictionary] = []
 
 
-func push(seq: int, move: Vector2, yaw: float) -> bool:
+func push(seq: int, move: Vector2, yaw: float, jump := false) -> bool:
 	if not MoveRules.is_valid_input(seq, last_seq, move, yaw):
 		return false
 	last_seq = seq
-	_items.append({"seq": seq, "move": move, "yaw": yaw})
+	_items.append({"seq": seq, "move": move, "yaw": yaw, "jump": jump})
 	if _items.size() > MAX_SIZE:
 		_items.pop_front()
 	return true

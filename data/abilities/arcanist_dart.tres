@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"arcanist_dart"
+display_name = "Dardo"
+kind = 1
+damage_type = 1
+damage = 90.0
+mana_cost = 40.0
+cooldown = 4.0
+reach = 18.0
+radius = 0.4
+speed = 28.0

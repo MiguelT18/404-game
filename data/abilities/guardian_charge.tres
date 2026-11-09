@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"guardian_charge"
+display_name = "Embestida"
+kind = 3
+damage_type = 0
+damage = 70.0
+mana_cost = 40.0
+cooldown = 7.0
+reach = 7.0
+radius = 1.2
+speed = 20.0

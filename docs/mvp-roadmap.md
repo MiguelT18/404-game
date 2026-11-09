@@ -29,11 +29,13 @@ El **MVP jugable es M3**: una partida 1v1 completa en línea única. Ese modo de
 
 ### M2: combate
 
-- [ ] Un personaje (Guardián) tiene ataque básico y sus 4 habilidades.
-- [ ] Cooldowns, maná, daño y muerte se calculan en el servidor.
-- [ ] Un personaje muerto reaparece en su base.
-- [ ] Hay interfaz básica de vida, maná y cooldowns.
-- [ ] Las estadísticas se cargan desde recursos `.tres`.
+- [x] Un personaje (Guardián) tiene ataque básico y sus 4 habilidades.
+- [x] Cooldowns, maná, daño y muerte se calculan en el servidor.
+- [x] Un personaje muerto reaparece en su base.
+- [x] Hay interfaz básica de vida, maná y cooldowns.
+- [x] Las estadísticas se cargan desde recursos `.tres`.
+
+Estos criterios se adelantaron a petición del equipo, junto con Arcanista (de M4), para probar héroes en el modo `hero_test`. Falta que una persona juegue y ajuste los valores. Los niveles y el desbloqueo de la definitiva siguen en M3.
 
 ### M3: MVP jugable, línea única 1v1
 

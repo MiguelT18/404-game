@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"guardian_impact"
+display_name = "Impacto"
+kind = 7
+damage_type = 0
+damage = 120.0
+mana_cost = 100.0
+cooldown = 30.0
+reach = 10.0
+radius = 4.0
+duration = 0.5
+stun = 1.2

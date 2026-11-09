@@ -40,9 +40,16 @@ layout_mode = 2
 text = "7777"
 placeholder_text = "Puerto"
 
+[node name="Hero" type="OptionButton" parent="Menu"]
+layout_mode = 2
+
 [node name="Connect" type="Button" parent="Menu"]
 layout_mode = 2
 text = "Conectar"
+
+[node name="Practice" type="Button" parent="Menu"]
+layout_mode = 2
+text = "Practicar en local"
 
 [node name="Status" type="Label" parent="Menu"]
 layout_mode = 2

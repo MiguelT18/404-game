@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MatchModeData" format=3]
+
+[ext_resource type="Script" path="res://shared/match_mode_data.gd" id="1"]
+[ext_resource type="Script" path="res://shared/hero_data.gd" id="2"]
+[ext_resource type="PackedScene" path="res://maps/hero_test_map.tscn" id="3"]
+[ext_resource type="Resource" path="res://data/heroes/guardian.tres" id="4"]
+[ext_resource type="Resource" path="res://data/heroes/arcanist.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+id = &"hero_test"
+players_per_team = 2
+map = ExtResource("3")
+heroes = Array[ExtResource("2")]([ExtResource("4"), ExtResource("5")])

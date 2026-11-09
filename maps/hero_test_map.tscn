@@ -1,0 +1,136 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://maps/training_dummy.tscn" id="1"]
+[ext_resource type="Resource" path="res://data/dummies/normal.tres" id="2"]
+[ext_resource type="Resource" path="res://data/dummies/armored.tres" id="3"]
+[ext_resource type="Resource" path="res://data/dummies/antimagic.tres" id="4"]
+[ext_resource type="Resource" path="res://data/dummies/far.tres" id="5"]
+
+[sub_resource type="BoxShape3D" id="long_shape"]
+size = Vector3(31, 3, 1)
+
+[sub_resource type="BoxMesh" id="long_mesh"]
+size = Vector3(31, 3, 1)
+
+[sub_resource type="BoxShape3D" id="side_shape"]
+size = Vector3(1, 3, 31)
+
+[sub_resource type="BoxMesh" id="side_mesh"]
+size = Vector3(1, 3, 31)
+
+[sub_resource type="BoxShape3D" id="block_shape"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxMesh" id="block_mesh"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="PlaneMesh" id="floor"]
+size = Vector2(30, 30)
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.45, 0.55, 0.65, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.4
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.05
+
+[node name="HeroTestMap" type="Node3D"]
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("floor")
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -15)
+
+[node name="Shape" type="CollisionShape3D" parent="WallNorth"]
+shape = SubResource("long_shape")
+
+[node name="Mesh" type="MeshInstance3D" parent="WallNorth"]
+mesh = SubResource("long_mesh")
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 15)
+
+[node name="Shape" type="CollisionShape3D" parent="WallSouth"]
+shape = SubResource("long_shape")
+
+[node name="Mesh" type="MeshInstance3D" parent="WallSouth"]
+mesh = SubResource("long_mesh")
+
+[node name="WallEast" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1.5, 0)
+
+[node name="Shape" type="CollisionShape3D" parent="WallEast"]
+shape = SubResource("side_shape")
+
+[node name="Mesh" type="MeshInstance3D" parent="WallEast"]
+mesh = SubResource("side_mesh")
+
+[node name="WallWest" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1.5, 0)
+
+[node name="Shape" type="CollisionShape3D" parent="WallWest"]
+shape = SubResource("side_shape")
+
+[node name="Mesh" type="MeshInstance3D" parent="WallWest"]
+mesh = SubResource("side_mesh")
+
+[node name="PillarLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.5, 0)
+
+[node name="Shape" type="CollisionShape3D" parent="PillarLeft"]
+shape = SubResource("block_shape")
+
+[node name="Mesh" type="MeshInstance3D" parent="PillarLeft"]
+mesh = SubResource("block_mesh")
+
+[node name="PillarRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1.5, 0)
+
+[node name="Shape" type="CollisionShape3D" parent="PillarRight"]
+shape = SubResource("block_shape")
+
+[node name="Mesh" type="MeshInstance3D" parent="PillarRight"]
+mesh = SubResource("block_mesh")
+
+[node name="Dummies" type="Node3D" parent="."]
+
+[node name="Normal" parent="Dummies" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+data = ExtResource("2")
+
+[node name="Armored" parent="Dummies" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 6)
+data = ExtResource("3")
+
+[node name="Antimagic" parent="Dummies" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6)
+data = ExtResource("4")
+
+[node name="Far" parent="Dummies" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+data = ExtResource("5")
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 12)
+
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 12)
+
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -12)
+
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -12)

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"guardian_sweep"
+display_name = "Golpe circular"
+kind = 2
+damage_type = 0
+damage = 60.0
+mana_cost = 50.0
+cooldown = 8.0
+radius = 4.0
+slow = 0.4
+slow_duration = 2.0

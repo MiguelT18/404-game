@@ -1,0 +1,170 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="steel"]
+albedo_color = Color(0.5, 0.54, 0.6, 1)
+metallic = 0.6
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="dark"]
+albedo_color = Color(0.16, 0.17, 0.2, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="accent"]
+albedo_color = Color(0.9, 0.5, 0.12, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="leg"]
+material = SubResource("dark")
+size = Vector3(0.28, 0.8, 0.34)
+
+[sub_resource type="BoxMesh" id="boot"]
+material = SubResource("steel")
+size = Vector3(0.32, 0.18, 0.46)
+
+[sub_resource type="BoxMesh" id="torso"]
+material = SubResource("steel")
+size = Vector3(0.8, 0.72, 0.5)
+
+[sub_resource type="BoxMesh" id="belt"]
+material = SubResource("accent")
+size = Vector3(0.84, 0.12, 0.54)
+
+[sub_resource type="BoxMesh" id="chest_plate"]
+material = SubResource("accent")
+size = Vector3(0.5, 0.4, 0.06)
+
+[sub_resource type="BoxMesh" id="back_plate"]
+material = SubResource("dark")
+size = Vector3(0.6, 0.55, 0.06)
+
+[sub_resource type="BoxMesh" id="back_stripe"]
+material = SubResource("accent")
+size = Vector3(0.14, 0.55, 0.03)
+
+[sub_resource type="SphereMesh" id="shoulder"]
+material = SubResource("accent")
+radius = 0.28
+height = 0.5
+
+[sub_resource type="BoxMesh" id="arm"]
+material = SubResource("dark")
+size = Vector3(0.2, 0.62, 0.24)
+
+[sub_resource type="BoxMesh" id="helmet"]
+material = SubResource("steel")
+size = Vector3(0.42, 0.42, 0.44)
+
+[sub_resource type="BoxMesh" id="visor"]
+material = SubResource("dark")
+size = Vector3(0.32, 0.08, 0.04)
+
+[sub_resource type="BoxMesh" id="crest"]
+material = SubResource("accent")
+size = Vector3(0.08, 0.16, 0.5)
+
+[sub_resource type="BoxMesh" id="shield"]
+material = SubResource("steel")
+size = Vector3(0.08, 1.0, 0.72)
+
+[sub_resource type="BoxMesh" id="shield_rim"]
+material = SubResource("accent")
+size = Vector3(0.04, 0.5, 0.3)
+
+[sub_resource type="CylinderMesh" id="handle"]
+material = SubResource("dark")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.8
+
+[sub_resource type="BoxMesh" id="mace_head"]
+material = SubResource("accent")
+size = Vector3(0.24, 0.24, 0.24)
+
+[node name="Guardian" type="Node3D"]
+
+[node name="LegLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.45, 0)
+mesh = SubResource("leg")
+
+[node name="LegRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.45, 0)
+mesh = SubResource("leg")
+
+[node name="BootLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.09, -0.05)
+mesh = SubResource("boot")
+
+[node name="BootRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.09, -0.05)
+mesh = SubResource("boot")
+
+[node name="Torso" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("torso")
+
+[node name="Belt" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87, 0)
+mesh = SubResource("belt")
+
+[node name="ChestPlate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -0.27)
+mesh = SubResource("chest_plate")
+
+[node name="BackPlate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0.27)
+mesh = SubResource("back_plate")
+
+[node name="BackStripe" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0.31)
+mesh = SubResource("back_stripe")
+
+[node name="ShoulderLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.55, 0)
+mesh = SubResource("shoulder")
+
+[node name="ShoulderRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.55, 0)
+mesh = SubResource("shoulder")
+
+[node name="ArmLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54, 1.15, 0)
+mesh = SubResource("arm")
+
+[node name="ArmRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54, 1.15, 0)
+mesh = SubResource("arm")
+
+[node name="Helmet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78, 0)
+mesh = SubResource("helmet")
+
+[node name="Visor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.82, -0.22)
+mesh = SubResource("visor")
+
+[node name="Crest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.06, 0)
+mesh = SubResource("crest")
+
+[node name="Shield" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.72, 1.05, -0.08)
+mesh = SubResource("shield")
+
+[node name="ShieldEmblem" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 1.05, -0.08)
+mesh = SubResource("shield_rim")
+
+[node name="Weapon" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.878, 0.479, 0, -0.479, 0.878, 0.58, 0.85, -0.05)
+
+[node name="Handle" type="MeshInstance3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("handle")
+
+[node name="Head" type="MeshInstance3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("mace_head")
+
+[node name="Tip" type="Marker3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)

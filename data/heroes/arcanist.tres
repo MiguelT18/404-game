@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="HeroData" format=3]
+
+[ext_resource type="Script" path="res://shared/hero_data.gd" id="1"]
+[ext_resource type="Script" path="res://shared/ability_data.gd" id="2"]
+[ext_resource type="Resource" path="res://data/abilities/arcanist_orb.tres" id="3"]
+[ext_resource type="Resource" path="res://data/abilities/arcanist_dart.tres" id="4"]
+[ext_resource type="Resource" path="res://data/abilities/arcanist_frost_field.tres" id="5"]
+[ext_resource type="Resource" path="res://data/abilities/arcanist_blink.tres" id="6"]
+[ext_resource type="Resource" path="res://data/abilities/arcanist_discharge.tres" id="7"]
+
+[resource]
+script = ExtResource("1")
+id = &"arcanist"
+display_name = "Arcanista"
+attack_type = 1
+damage_type = 1
+move_speed = 6.0
+max_health = 420.0
+max_mana = 320.0
+mana_regen = 10.0
+armor = 15.0
+magic_resist = 30.0
+basic_attack = ExtResource("3")
+abilities = Array[ExtResource("2")]([ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7")])

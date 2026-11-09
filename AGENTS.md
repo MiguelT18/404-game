@@ -55,10 +55,16 @@ Si estos comandos cambian, actualízalos aquí.
 # Ejecutar el servidor de partida
 godot --headless --path . -- --server --port 7777 --mode line_1v1
 
+# Ejecutar el servidor de la arena de pruebas de héroes
+godot --headless --path . -- --server --port 7777 --mode hero_test
+
 # Ejecutar las pruebas de reglas
 godot --headless --path . --script res://tests/run_tests.gd
 
-# Ejecutar la prueba de red: un servidor y varios clientes headless
+# Ejecutar las pruebas de habilidades con física real, sin red
+godot --headless --path . res://tests/ability_test.tscn
+
+# Ejecutar la prueba de red: servidores y varios clientes headless
 tests/net_smoke.sh
 ```
 
