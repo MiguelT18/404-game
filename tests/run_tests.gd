@@ -210,7 +210,25 @@ func _test_data() -> void:
 		var heroes: Array[HeroData] = load("res://data/modes/%s.tres" % mode_id).heroes
 		for hero in heroes:
 			_check(ResourceLoader.exists("res://client/heroes/%s.tscn" % hero.id), "%s tiene modelo" % hero.id)
+	_test_hero_clips()
 	var map: Node = mode.map.instantiate()
 	_check(map.get_node("Dummies").get_child_count() == 4, "el mapa tiene 4 muñecos")
 	_check(map.get_node("SpawnPoints").get_child_count() == 4, "el mapa tiene 4 apariciones")
 	map.free()
+
+
+# Un modelo con esqueleto necesita los clips de movimiento y uno por habilidad,
+# y su punta de disparo, aunque cuelgue de un hueso.
+func _test_hero_clips() -> void:
+	for id in ["guardian", "arcanist"]:
+		var hero: HeroData = load("res://data/heroes/%s.tres" % id)
+		var model: Node3D = load("res://client/heroes/%s.tscn" % id).instantiate()
+		_check(model.find_child("Tip", true, false) is Node3D, "%s tiene punta de disparo" % id)
+		var player: AnimationPlayer = model.find_child("AnimationPlayer", true, false)
+		if player != null:
+			for clip in HeroRig.MOVES:
+				_check(player.has_animation(clip), "%s tiene el clip %s" % [id, clip])
+			for slot in HeroData.SLOT_COUNT:
+				var ability := hero.ability(slot)
+				_check(player.has_animation(ability.id), "%s tiene el clip %s" % [id, ability.id])
+		model.free()

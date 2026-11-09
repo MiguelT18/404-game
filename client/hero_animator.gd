@@ -2,7 +2,8 @@ class_name HeroAnimator
 extends Node
 ## Gestos del modelo al lanzar habilidades. Mueve el modelo y su arma, nunca el
 ## cuerpo, así que es solo presentación. Va como hijo del modelo y busca en él
-## `Weapon`, `Weapon/Tip` y, si lo tiene, `Shield`.
+## `Weapon`, `Tip` y, si lo tiene, `Shield`. Si el modelo trae esqueleto y clips,
+## delega en `HeroRig` y solo usa estos gestos para lo que no tenga clip.
 
 ## Altura del salto de Impacto. El servidor lo mueve en el plano; el arco es visual.
 const LEAP_HEIGHT := 2.2
@@ -17,6 +18,7 @@ var _weapon: Node3D
 var _shield: Node3D
 var _rest: Dictionary[Node3D, Transform3D] = {}
 var _tween: Tween
+var _rig: HeroRig
 
 
 func _ready() -> void:
@@ -26,11 +28,13 @@ func _ready() -> void:
 	for part: Node3D in [_model, _weapon, _shield]:
 		if part != null:
 			_rest[part] = part.transform
+	_rig = HeroRig.attach(_model)
 
 
-## Punto del que salen los disparos y las cargas.
+## Punto del que salen los disparos y las cargas. En un modelo con esqueleto
+## cuelga de un hueso, así que se busca a cualquier profundidad.
 func tip() -> Node3D:
-	var node := _model.get_node_or_null("Weapon/Tip")
+	var node := _model.find_child("Tip", true, false) as Node3D
 	return node if node != null else _model
 
 
@@ -38,6 +42,11 @@ func play(ability: AbilityData) -> void:
 	if _tween != null:
 		_tween.kill()
 	_restore()
+	if _rig != null and _rig.has_clip(ability.id):
+		_rig.cast(ability)
+		# El parpadeo además encoge el modelo, para que se note el salto.
+		if ability.kind != AbilityData.Kind.BLINK:
+			return
 	_tween = create_tween()
 	# Con interpolación de física, moverlo fuera del tick se vería a saltos.
 	if _model.is_physics_interpolated_and_enabled():

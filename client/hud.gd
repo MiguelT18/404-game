@@ -73,7 +73,13 @@ func _build_portrait(hero: HeroData) -> void:
 	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	viewport.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	add_child(viewport)
-	viewport.add_child(load(HERO_VISUAL_PATH % hero.id).instantiate())
+	var model: Node3D = load(HERO_VISUAL_PATH % hero.id).instantiate()
+	viewport.add_child(model)
+	# Un modelo con esqueleto posa en reposo, no en la pose de modelado.
+	var player: AnimationPlayer = model.find_child("AnimationPlayer", true, false)
+	if player != null and player.has_animation(&"idle"):
+		player.play(&"idle")
+		player.seek(0.0, true)
 	var environment := Environment.new()
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.ambient_light_color = Color.WHITE
