@@ -89,6 +89,8 @@ func _ready() -> void:
 	anim_player = get_path_to(_player)
 	tree_root = _build_tree()
 	active = true
+	# La transición empieza sin estado: sin esta petición el árbol no reproduce nada.
+	set("parameters/move/transition_request", String(_state))
 
 
 func _build_tree() -> AnimationNodeBlendTree:
