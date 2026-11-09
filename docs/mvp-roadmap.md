@@ -9,7 +9,7 @@ Actualiza esta línea al terminar cada hito. Un hito termina cuando se cumplen t
 El **MVP jugable es M3**: una partida 1v1 completa en línea única. Ese modo demuestra casi todo el juego, y los modos mayores reutilizan su mapa, reglas y red.
 
 - La red se prueba desde M1, porque es el mayor riesgo técnico del proyecto.
-- El arte es provisional, con cápsulas y formas simples, hasta M4.
+- El arte es provisional, con cápsulas y formas simples, hasta M4. Excepción decidida por el equipo: el Arcanista ya tiene su modelo definitivo en `models/heroes/arcanist.glb`.
 - El matchmaking va al final. Hasta entonces, basta con conectarse por IP o Tailscale.
 
 ## Hitos
